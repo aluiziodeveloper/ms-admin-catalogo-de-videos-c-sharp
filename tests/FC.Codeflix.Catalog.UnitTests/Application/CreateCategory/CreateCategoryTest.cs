@@ -25,7 +25,7 @@ public class CreateCategoryTest
         var output = await useCase.Handle(input, CancellationToken.None);
 
         repositoryMock.Verify(
-            repository => repository.Create(
+            repository => repository.Insert(
                 It.IsAny<Category>(),
                 It.IsAny<CancellationToken>()
             ),
