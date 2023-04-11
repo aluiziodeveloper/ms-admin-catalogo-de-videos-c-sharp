@@ -1,6 +1,9 @@
 ﻿using Xunit;
 using Moq;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.CreateCategory;
+using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Domain.Repository;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory;
 
