@@ -9,7 +9,6 @@ public class DomainValidationTest
 {
     private Faker Faker { get; set; } = new Faker();
 
-    // nao ser null
     [Fact(DisplayName = nameof(NotNullOk))]
     [Trait("Domain", "DomainValidation - Validation")]
     public void NotNullOk()
