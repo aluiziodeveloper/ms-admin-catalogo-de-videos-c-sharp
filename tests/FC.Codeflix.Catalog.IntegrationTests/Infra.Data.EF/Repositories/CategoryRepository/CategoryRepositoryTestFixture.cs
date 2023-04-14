@@ -43,6 +43,10 @@ public class CategoryRepositoryTestFixture
             getRandomBoolean()
         );
 
+    public List<Category> GetExampleCategoriesList(int length = 10)
+        => Enumerable.Range(1, length)
+            .Select(_ => GetExampleCategory()).ToList();
+
     public CodeflixCatalogDbContext CreateDbContext()
     => new(
             new DbContextOptionsBuilder<CodeflixCatalogDbContext>()
