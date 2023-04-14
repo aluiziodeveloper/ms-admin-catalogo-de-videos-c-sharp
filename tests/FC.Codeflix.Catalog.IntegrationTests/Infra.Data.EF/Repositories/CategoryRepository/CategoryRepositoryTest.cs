@@ -1,7 +1,8 @@
-﻿using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
+using Xunit;
 using FC.Codeflix.Catalog.Infra.Data.EF;
 using Repository = FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
+using System;
 using FC.Codeflix.Catalog.Application.Exceptions;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
@@ -25,7 +26,8 @@ public class CategoryRepositoryTest
         await categoryRepository.Insert(exampleCategory, CancellationToken.None);
         await dbContext.SaveChangesAsync(CancellationToken.None);
 
-        var dbCategory = await dbContext.Categories.FindAsync(exampleCategory.Id);
+        var dbCategory = await (_fixture.CreateDbContext())
+            .Categories.FindAsync(exampleCategory.Id);
         dbCategory.Should().NotBeNull();
         dbCategory!.Name.Should().Be(exampleCategory.Name);
         dbCategory.Description.Should().Be(exampleCategory.Description);
@@ -43,7 +45,9 @@ public class CategoryRepositoryTest
         exampleCategoriesList.Add(exampleCategory);
         await dbContext.AddRangeAsync(exampleCategoriesList);
         await dbContext.SaveChangesAsync(CancellationToken.None);
-        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var categoryRepository = new Repository.CategoryRepository(
+            _fixture.CreateDbContext()
+        );
 
         var dbCategory = await categoryRepository.Get(
             exampleCategory.Id,
@@ -75,6 +79,7 @@ public class CategoryRepositoryTest
             .WithMessage($"Catgory '{exampleId}' not found.");
     }
 
+
     [Fact(DisplayName = nameof(Update))]
     [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
     public async Task Update()
@@ -92,7 +97,8 @@ public class CategoryRepositoryTest
         await categoryRepository.Update(exampleCategory, CancellationToken.None);
         await dbContext.SaveChangesAsync();
 
-        var dbCategory = await dbContext.Categories.FindAsync(exampleCategory.Id);
+        var dbCategory = await (_fixture.CreateDbContext())
+            .Categories.FindAsync(exampleCategory.Id);
         dbCategory.Should().NotBeNull();
         dbCategory!.Name.Should().Be(exampleCategory.Name);
         dbCategory.Id.Should().Be(exampleCategory.Id);
