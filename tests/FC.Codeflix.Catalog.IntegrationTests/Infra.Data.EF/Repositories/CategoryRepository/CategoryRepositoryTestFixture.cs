@@ -1,6 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.IntegrationTests.Base;
 using FC.Codeflix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.IntegrationTests.Base;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -8,7 +8,8 @@ namespace FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.Catego
 
 [CollectionDefinition(nameof(CategoryRepositoryTestFixture))]
 public class CategoryRepositoryTestFixtureCollection
-    : ICollectionFixture<CategoryRepositoryTestFixture> {}
+    : ICollectionFixture<CategoryRepositoryTestFixture>
+{ }
 
 public class CategoryRepositoryTestFixture
     : BaseFixture
@@ -47,10 +48,15 @@ public class CategoryRepositoryTestFixture
         => Enumerable.Range(1, length)
             .Select(_ => GetExampleCategory()).ToList();
 
-    public CodeflixCatalogDbContext CreateDbContext()
-    => new(
+    public CodeflixCatalogDbContext CreateDbContext(bool preserveData = false)
+    {
+        var context = new CodeflixCatalogDbContext(
             new DbContextOptionsBuilder<CodeflixCatalogDbContext>()
             .UseInMemoryDatabase("integration-tests-db")
             .Options
         );
+        if (preserveData == false)
+            context.Database.EnsureDeleted();
+        return context;
+    }
 }
