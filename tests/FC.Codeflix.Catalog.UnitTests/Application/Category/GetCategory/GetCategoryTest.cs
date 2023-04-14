@@ -4,7 +4,7 @@ using Xunit;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using FC.Codeflix.Catalog.Application.Exceptions;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.GetCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryTest
@@ -19,7 +19,7 @@ public class GetCategoryTest
     public async Task GetCategory()
     {
         var repositoryMock = _fixture.GetRepositoryMock();
-        var exampleCategory = _fixture.GetValidCategory();
+        var exampleCategory = _fixture.GetExampleCategory();
         repositoryMock.Setup(x => x.Get(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
@@ -41,6 +41,7 @@ public class GetCategoryTest
         output.Id.Should().Be(exampleCategory.Id);
         output.CreatedAt.Should().Be(exampleCategory.CreatedAt);
     }
+
 
     [Fact(DisplayName = nameof(NotFoundExceptionWhenCategoryDoesntExist))]
     [Trait("Application", "GetCategory - Use Cases")]

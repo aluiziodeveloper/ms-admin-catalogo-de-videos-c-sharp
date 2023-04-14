@@ -1,14 +1,14 @@
 ﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.Codeflix.Catalog.Domain.Entity;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.UpdateCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryTest
@@ -26,8 +26,8 @@ public class UpdateCategoryTest
         MemberType = typeof(UpdateCategoryTestDataGenerator)
     )]
     public async Task UpdateCategory(
-        Category exampleCategory,
-        UseCase.UpdateCategoryInput input
+        DomainEntity.Category exampleCategory,
+        UpdateCategoryInput input
     )
     {
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -69,8 +69,8 @@ public class UpdateCategoryTest
         MemberType = typeof(UpdateCategoryTestDataGenerator)
     )]
     public async Task UpdateCategoryWithoutProvidingIsActive(
-        Category exampleCategory,
-        UseCase.UpdateCategoryInput exampleInput
+        DomainEntity.Category exampleCategory,
+        UpdateCategoryInput exampleInput
     )
     {
         var input = new UpdateCategoryInput(
@@ -118,8 +118,8 @@ public class UpdateCategoryTest
         MemberType = typeof(UpdateCategoryTestDataGenerator)
     )]
     public async Task UpdateCategoryOnlyName(
-        Category exampleCategory,
-        UseCase.UpdateCategoryInput exampleInput
+        DomainEntity.Category exampleCategory,
+        UpdateCategoryInput exampleInput
     )
     {
         var input = new UpdateCategoryInput(
