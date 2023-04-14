@@ -31,16 +31,22 @@ public class CategoryRepository : ICategoryRepository
         return category!;
     }
 
-    public Task Update(Category aggregate, CancellationToken cancellationToken)
+    public Task Update(Category aggregate, CancellationToken _)
         => Task.FromResult(_categories.Update(aggregate));
 
     public Task Delete(Category aggregate, CancellationToken _)
         => Task.FromResult(_categories.Remove(aggregate));
 
-    public async Task<SearchOutput<Category>> Search(SearchInput input, CancellationToken cancellationToken)
+    public async Task<SearchOutput<Category>> Search(
+        SearchInput input,
+        CancellationToken cancellationToken)
     {
+        var toSkip = (input.Page - 1) * input.PerPage;
         var total = await _categories.CountAsync();
-        var items = await _categories.ToListAsync();
+        var items = await _categories.AsNoTracking()
+            .Skip(toSkip)
+            .Take(input.PerPage)
+            .ToListAsync();
         return new(input.Page, input.PerPage, total, items);
     }
 }
