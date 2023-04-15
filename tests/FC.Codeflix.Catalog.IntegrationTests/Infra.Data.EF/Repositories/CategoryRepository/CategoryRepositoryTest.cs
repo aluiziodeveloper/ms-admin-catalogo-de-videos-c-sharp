@@ -177,13 +177,13 @@ public class CategoryRepositoryTest
         output.Items.Should().HaveCount(0);
     }
 
-    [Theory(DisplayName = nameof(SearchRetursListAndTotal))]
+    [Theory(DisplayName = nameof(SearchReturnsPaginated))]
     [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
     [InlineData(10, 1, 5, 5)]
     [InlineData(10, 2, 5, 5)]
     [InlineData(7, 2, 5, 2)]
     [InlineData(7, 3, 5, 0)]
-    public async Task SearchRetursPaginated(
+    public async Task SearchReturnsPaginated(
         int quantityCategoriesToGenerate,
         int page,
         int perPage,
@@ -301,7 +301,7 @@ public class CategoryRepositoryTest
 
         var output = await categoryRepository.Search(searchInput, CancellationToken.None);
 
-        var expectedOrderedList = _fixture.ClonecategoriesListOrdered(
+        var expectedOrderedList = _fixture.CloneCategoriesListOrdered(
             exampleCategoriesList,
             orderBy,
             searchOrder
