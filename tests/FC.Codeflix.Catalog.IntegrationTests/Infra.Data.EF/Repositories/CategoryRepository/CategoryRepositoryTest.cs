@@ -77,7 +77,7 @@ public class CategoryRepositoryTest
             CancellationToken.None);
 
         await task.Should().ThrowAsync<NotFoundException>()
-            .WithMessage($"Catgory '{exampleId}' not found.");
+            .WithMessage($"Category '{exampleId}' not found.");
     }
 
     [Fact(DisplayName = nameof(Update))]

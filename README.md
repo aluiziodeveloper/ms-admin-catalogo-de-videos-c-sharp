@@ -2,7 +2,7 @@
 
 ### Projeto Prático - Backend .NET (Microservice)
 
-Microsserviço referente ao backend da Administração do Catálogo de Vídeos, utilizando Clean Rachitecture, DDD, TDD e as principais boas práticas atuais de mercado.
+Microsserviço referente ao backend da Administração do Catálogo de Vídeos, utilizando Clean Architecture, DDD, TDD e as principais boas práticas atuais de mercado.
 
 
 ### Ferramentas necessárias
